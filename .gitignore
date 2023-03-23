@@ -7,7 +7,7 @@
 [Ll]ogs/
 Assets/AssetStoreTools*
 Assets/Firebase/
-Assets/LunarConsole
+Assets/LunarConsole/
 
 # Visual Studio cache directory
 .vs/
