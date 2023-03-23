@@ -12,19 +12,20 @@ namespace VitaliyNULL.PlayerController
         protected Vector2 StartTouchPos;
         protected Vector2 SwipeDelta;
         public float minDeltaSwipe = 40f;
-        private float _timeToLerp = 5f;
+        private readonly float _timeToLerp = 9f;
         protected bool IsSwiping;
-        private bool _isTurning;
         [HideInInspector] public Rigidbody playerRigidbody;
         [HideInInspector] public Animator animator;
         [HideInInspector] public BoxCollider boxCollider;
-        private readonly float _horizontalForce = 2;
         private readonly float _bounds = 2;
         private Coroutine _rolling;
+        private Coroutine _turning;
+        private Vector3 _toMove = new Vector3();
+
         [HideInInspector] public StateMachine.StateMachine stateMachine;
 
         private readonly List<Vector3> _positions = new List<Vector3>()
-            { new Vector3(0, 0, 0), new Vector3(2, 0, 0), new Vector3(-2, 0, 0) };
+            { new Vector3(0, 0.5f, 0), new Vector3(2, 0.5f, 0), new Vector3(-2, 0.5f, 0) };
 
 
         private void OnCollisionEnter(Collision other)
@@ -40,6 +41,7 @@ namespace VitaliyNULL.PlayerController
                         return;
                     }
                 }
+
                 GameManager.Instance.PlayGameOver();
                 stateMachine.SwitchState<DeathState>();
             }
@@ -53,7 +55,6 @@ namespace VitaliyNULL.PlayerController
             animator = GetComponent<Animator>();
             boxCollider = GetComponent<BoxCollider>();
             stateMachine = GetComponent<StateMachine.StateMachine>();
-            _isTurning = false;
         }
 
         private void Start()
@@ -99,54 +100,66 @@ namespace VitaliyNULL.PlayerController
 
         private void GoLeft()
         {
-            if (Mathf.RoundToInt(transform.position.x) > -_bounds && !_isTurning)
-            {
-                StartCoroutine(WaitToGoLeft());
-                //
-                // playerRigidbody.MovePosition(transform.position +
-                //                              Vector3.left * HorizontalForce);
-            }
-        }
-
-        private IEnumerator WaitToGoLeft()
-        {
-            _isTurning = true;
-            float moveX = transform.position.x + Vector3.left.x * _horizontalForce;
-            while (transform.position.x > moveX)
-            {
-                float t = Time.deltaTime * _timeToLerp;
-                transform.position = Vector3.MoveTowards(transform.position,
-                    transform.position + Vector3.left * _horizontalForce, t);
-                yield return null;
-            }
-
-            _isTurning = false;
-        }
-
-        private IEnumerator WaitToGoRight()
-        {
-            _isTurning = true;
-            float moveX = transform.position.x + Vector3.right.x * _horizontalForce;
-            while (transform.position.x < moveX)
-            {
-                float t = Time.deltaTime * _timeToLerp;
-                transform.position = Vector3.MoveTowards(transform.position,
-                    transform.position + Vector3.right * _horizontalForce, t);
-                yield return null;
-            }
-
-            _isTurning = false;
+            _turning = StartCoroutine(WaitToGoLeft());
         }
 
         private void GoRight()
         {
-            if (Mathf.RoundToInt(transform.position.x) < _bounds && !_isTurning)
+            _turning = StartCoroutine(WaitToGoRight());
+        }
+
+        private IEnumerator WaitToGoLeft()
+        {
+            bool hasPos = false;
+            foreach (var position in _positions)
             {
-                StartCoroutine(WaitToGoRight());
-                // playerRigidbody.MovePosition(transform.position +
-                //                              Vector3.right * HorizontalForce);
+                if (Mathf.RoundToInt(transform.position.x - position.x) == _bounds)
+                {
+                    _toMove = position;
+                    hasPos = true;
+                    break;
+                }
+            }
+
+            if (hasPos)
+            {
+                while (transform.position.x > _toMove.x)
+                {
+                    float t = 0;
+                    t += Time.deltaTime * _timeToLerp;
+                    transform.position = Vector3.MoveTowards(transform.position,
+                        new Vector3(_toMove.x, transform.position.y, _toMove.z), t);
+                    yield return new WaitForFixedUpdate();
+                }
             }
         }
+
+        private IEnumerator WaitToGoRight()
+        {
+            bool hasPos = false;
+            foreach (var position in _positions)
+            {
+                if (Mathf.RoundToInt(transform.position.x - position.x) == -_bounds)
+                {
+                    _toMove = position;
+                    hasPos = true;
+                    break;
+                }
+            }
+
+            if (hasPos)
+            {
+                while (transform.position.x < _toMove.x)
+                {
+                    float t = 0;
+                    t += Time.deltaTime * _timeToLerp;
+                    transform.position = Vector3.MoveTowards(transform.position,
+                        new Vector3(_toMove.x, transform.position.y, _toMove.z), t);
+                    yield return new WaitForFixedUpdate();
+                }
+            }
+        }
+
 
         protected void ResetSwipe()
         {
