@@ -22,11 +22,9 @@ namespace VitaliyNULL.GoogleAds
                 Instance = this;
             }
 
-            MobileAds.Initialize((InitializationStatus initStatus) => 
-                { Debug.Log("Ad is initialized"); });
+            MobileAds.Initialize((InitializationStatus initStatus) => { Debug.Log("Ad is initialized"); });
             LoadRewardedAd();
             RegisterReloadHandler(rewardedAd);
-            
         }
 
         public void LoadRewardedAd()
@@ -71,12 +69,13 @@ namespace VitaliyNULL.GoogleAds
             {
                 rewardedAd.Show((Reward reward) =>
                 {
+                    Debug.Log(reward.Amount + " " + reward.Type);
                     GameManager.Instance.ContinueGame();
                 });
             }
         }
 
-      
+
         private void RegisterReloadHandler(RewardedAd ad)
         {
             // Raised when the ad closed full screen content.

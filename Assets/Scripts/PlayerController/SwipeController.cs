@@ -11,7 +11,7 @@ namespace VitaliyNULL.PlayerController
     {
         protected Vector2 StartTouchPos;
         protected Vector2 SwipeDelta;
-        public float minDeltaSwipe = 40f;
+        public float minDeltaSwipe = 50f;
         private readonly float _timeToLerp = 9f;
         protected bool IsSwiping;
         [HideInInspector] public Rigidbody playerRigidbody;
