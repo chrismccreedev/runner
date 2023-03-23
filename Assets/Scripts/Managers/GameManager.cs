@@ -17,6 +17,7 @@ namespace VitaliyNULL.Managers
         [SerializeField] private Image continueImage;
         [SerializeField] private TMP_Text continueText;
         [SerializeField] private Button continueButton;
+        private SwipeController _swipeController;
         private int _rewardedCount = 0;
         private float _timeToWait = 4f;
         private bool _isGamePlaying;
@@ -31,7 +32,6 @@ namespace VitaliyNULL.Managers
             }
         }
 
-        private SwipeController _swipeController;
 
 
         private void Awake()
@@ -63,8 +63,10 @@ namespace VitaliyNULL.Managers
 
         public void GetSwipeController(SwipeController swipeController)
         {
+            Debug.Log("set swipe controller to gamemanager");
             _swipeController = swipeController;
         }
+
 
 
         public void PlayGameOver()
@@ -93,7 +95,6 @@ namespace VitaliyNULL.Managers
 
         public void ContinueGame()
         {
-            ObjectPoolManager.Instance.CleanAllObjects();
             GamePlaying = true;
             gameOver.SetActive(false);
             panel.gameObject.SetActive(false);

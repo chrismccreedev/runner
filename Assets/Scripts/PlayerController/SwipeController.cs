@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,9 @@ namespace VitaliyNULL.PlayerController
         private readonly float _bounds = 2;
         private Coroutine _rolling;
         private Coroutine _turning;
+        private Coroutine _destroyCoroutine;
         private Vector3 _toMove = new Vector3();
+        private bool _isGameOver = false;
 
         //this needs for check what swipe is larger horizontal or vertical
         private float _horizontalSwipe;
@@ -45,10 +48,19 @@ namespace VitaliyNULL.PlayerController
                         return;
                     }
                 }
-
                 GameManager.Instance.PlayGameOver();
                 stateMachine.SwitchState<DeathState>();
+                _destroyCoroutine ??=StartCoroutine(WaitForDestroy(moveObstacle));
             }
+        }
+
+        private IEnumerator WaitForDestroy(MoveObstacle obstacle)
+        {
+            while (!GameManager.Instance.GamePlaying)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+            obstacle.DeleteObstacle();
         }
 
 

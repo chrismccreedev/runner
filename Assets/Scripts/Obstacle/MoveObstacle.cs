@@ -39,6 +39,13 @@ namespace VitaliyNULL.Obstacle
             _rigidbody.MovePosition(transform.position + Vector3.back * _speed * Time.deltaTime);
         }
 
+        public void DeleteObstacle()
+        {
+            Debug.Log("Destroying obstacle");
+            gameObject.SetActive(false);
+            Debug.Log("Obstacle Destroyed");
+        }
+
         private void Update()
         {
             if (transform.position.z < -10f)

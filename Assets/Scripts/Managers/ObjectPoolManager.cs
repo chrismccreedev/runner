@@ -35,20 +35,12 @@ namespace VitaliyNULL.Managers
             _pooledObjects = Shuffle(_pooledObjects);
         }
 
-        public void CleanAllObjects()
-        {
-            foreach (var obstacle in _pooledObjects)
-            {
-                obstacle.gameObject.SetActive(false);
-            }
-        }
         public MoveObstacle GetPooledObject()
         {
             for (int i = 0; i < _pooledObjects.Count; i++)
             {
                 if (!_pooledObjects[i].gameObject.activeSelf)
                 {
-
                     return _pooledObjects[i];
                 }
             }

@@ -45,14 +45,23 @@ namespace VitaliyNULL.StateMachine
         public override IEnumerator Stop(StateMachine stateMachine)
         {
             Animator.StopPlayback();
+            if (center != Vector3.zero)
+            {
+                _boxCollider.center = center;
+                _boxCollider.size = size;
+            }
+
             yield return null;
         }
 
         public override IEnumerator StopImmediate(StateMachine stateMachine)
         {
             _isSliding = false;
-            _boxCollider.center = center;
-            _boxCollider.size = size;
+            if (center != Vector3.zero)
+            {
+                _boxCollider.center = center;
+                _boxCollider.size = size;
+            }
             yield return null;
         }
     }

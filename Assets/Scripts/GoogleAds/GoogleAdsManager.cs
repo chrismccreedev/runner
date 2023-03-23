@@ -24,7 +24,6 @@ namespace VitaliyNULL.GoogleAds
 
             MobileAds.Initialize((InitializationStatus initStatus) => { Debug.Log("Ad is initialized"); });
             LoadRewardedAd();
-            RegisterReloadHandler(rewardedAd);
         }
 
         public void LoadRewardedAd()
@@ -57,20 +56,23 @@ namespace VitaliyNULL.GoogleAds
                               + ad.GetResponseInfo());
 
                     rewardedAd = ad;
+                    RegisterReloadHandler(rewardedAd);
                 });
         }
+
 
         public void ShowRewardedAd()
         {
             const string rewardMsg =
                 "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
             if (rewardedAd != null && rewardedAd.CanShowAd())
             {
-                rewardedAd.Show((Reward reward) =>
+                rewardedAd.Show(reward =>
                 {
-                    Debug.Log(reward.Amount + " " + reward.Type);
+#if UNITY_EDITOR
                     GameManager.Instance.ContinueGame();
+#endif
+                    Debug.Log("Show rewarded ad");
                 });
             }
         }
@@ -94,6 +96,12 @@ namespace VitaliyNULL.GoogleAds
 
                 // Reload the ad so that we can show another as soon as possible.
                 LoadRewardedAd();
+            };
+            ad.OnAdFullScreenContentOpened += () => Debug.Log("Rewarded ad full screen opened");
+            ad.OnAdPaid += value =>
+            {
+                Debug.Log("Get reward");
+                GameManager.Instance.ContinueGame();
             };
         }
     }

@@ -15,7 +15,7 @@ namespace VitaliyNULL.PlayerController
             {
                 ResetSwipe();
             }
-
+            
             CheckSwipe();
         }
     }
