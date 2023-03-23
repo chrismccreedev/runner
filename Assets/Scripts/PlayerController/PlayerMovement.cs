@@ -21,7 +21,7 @@ namespace VitaliyNULL.PlayerController
         }
 
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (!GameManager.Instance.GamePlaying) return;
             _controller.Run();

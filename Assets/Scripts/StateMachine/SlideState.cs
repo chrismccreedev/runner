@@ -9,6 +9,8 @@ namespace VitaliyNULL.StateMachine
         private Rigidbody _rigidbody;
         private bool _isSliding;
         private float _downForce = 6f;
+        Vector3 center = Vector3.zero;
+        Vector3 size = Vector3.zero;
 
         public SlideState(Animator animator, BoxCollider boxCollider, Rigidbody rigidbody) : base(animator)
         {
@@ -22,8 +24,8 @@ namespace VitaliyNULL.StateMachine
             if (!_isSliding)
             {
                 _isSliding = true;
-                Vector3 center = _boxCollider.center;
-                Vector3 size = _boxCollider.size;
+                center = _boxCollider.center;
+                size = _boxCollider.size;
                 _boxCollider.center = new Vector3(0, center.y / 5, 0);
                 _boxCollider.size = new Vector3(1, size.y / 4, 1);
                 Animator.CrossFade(AnimationsName.Slide, 0.1f);
@@ -35,6 +37,7 @@ namespace VitaliyNULL.StateMachine
                 {
                     stateMachine.SwitchState<RunState>();
                 }
+
                 _isSliding = false;
             }
         }
@@ -48,6 +51,8 @@ namespace VitaliyNULL.StateMachine
         public override IEnumerator StopImmediate(StateMachine stateMachine)
         {
             _isSliding = false;
+            _boxCollider.center = center;
+            _boxCollider.size = size;
             yield return null;
         }
     }

@@ -11,7 +11,7 @@ namespace VitaliyNULL.PlayerController
     {
         protected Vector2 StartTouchPos;
         protected Vector2 SwipeDelta;
-        public float minDeltaSwipe = 50f;
+        private float _minDeltaSwipe = 60f;
         private readonly float _timeToLerp = 9f;
         protected bool IsSwiping;
         [HideInInspector] public Rigidbody playerRigidbody;
@@ -21,6 +21,10 @@ namespace VitaliyNULL.PlayerController
         private Coroutine _rolling;
         private Coroutine _turning;
         private Vector3 _toMove = new Vector3();
+
+        //this needs for check what swipe is larger horizontal or vertical
+        private float _horizontalSwipe;
+        private float _verticalSwipe;
 
         [HideInInspector] public StateMachine.StateMachine stateMachine;
 
@@ -70,7 +74,10 @@ namespace VitaliyNULL.PlayerController
                 SwipeDelta = Input.mousePosition;
             }
 
-            if (Mathf.Abs(SwipeDelta.x - StartTouchPos.x) > minDeltaSwipe)
+            _horizontalSwipe = Mathf.Abs(SwipeDelta.x - StartTouchPos.x);
+            _verticalSwipe = Mathf.Abs(SwipeDelta.y - StartTouchPos.y);
+            // if vertical > that is true, if horizontal > that is false
+            if (_horizontalSwipe > _minDeltaSwipe && _horizontalSwipe > _verticalSwipe)
             {
                 if (SwipeDelta.x < StartTouchPos.x)
                 {
@@ -83,7 +90,7 @@ namespace VitaliyNULL.PlayerController
 
                 ResetSwipe();
             }
-            else if (Mathf.Abs(SwipeDelta.y - StartTouchPos.y) > minDeltaSwipe)
+            else if (_verticalSwipe > _minDeltaSwipe && _verticalSwipe > _horizontalSwipe)
             {
                 if (SwipeDelta.y < StartTouchPos.y)
                 {
