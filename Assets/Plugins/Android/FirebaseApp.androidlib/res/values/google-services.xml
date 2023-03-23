@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://runner-a2db4-default-rtdb.europe-west1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">795733570211</string>
+  <string name="google_storage_bucket" translatable="false">runner-a2db4.appspot.com</string>
+  <string name="project_id" translatable="false">runner-a2db4</string>
+  <string name="google_api_key" translatable="false">AIzaSyBy4d-YGYj650H7MvN21SdUeb9y7ErVmsk</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBy4d-YGYj650H7MvN21SdUeb9y7ErVmsk</string>
+  <string name="google_app_id" translatable="false">1:795733570211:android:24cd87e9e5d91de7008516</string>
+  <string name="default_web_client_id" translatable="false">795733570211-0g3b1t0j5b90pn4f25h1am0du17deb0k.apps.googleusercontent.com</string>
+</resources>

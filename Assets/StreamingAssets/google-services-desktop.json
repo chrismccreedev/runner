@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "795733570211",
+    "firebase_url": "https://runner-a2db4-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "runner-a2db4",
+    "storage_bucket": "runner-a2db4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795733570211:android:24cd87e9e5d91de7008516",
+        "android_client_info": {
+          "package_name": "com.VitaliyNull.Runner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795733570211-0g3b1t0j5b90pn4f25h1am0du17deb0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy4d-YGYj650H7MvN21SdUeb9y7ErVmsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795733570211-0g3b1t0j5b90pn4f25h1am0du17deb0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
